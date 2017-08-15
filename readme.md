@@ -1,6 +1,6 @@
 # Easier kittens
 
-`Taming that NodeJS callbacks kittens.`
+`'Taming that NodeJS callbacks kittens.'` - Kittens are cute, but they got nails!
 
 Exploring:
 
