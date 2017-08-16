@@ -1,4 +1,4 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 const createMessage = require('./create-message');
 
 mongoose.connect('mongodb://localhost/easy_kittens', {
@@ -14,44 +14,52 @@ var KittenStay = mongoose.model('KittenStay',
     days : Number
 });
 
-function kittensBookedForWeekday(weekday){
-    return KittenStay.count({arrivalDay : weekday})
+function kittensBookedForWeekday(weekday, cb){
+    return KittenStay.count({arrivalDay : weekday}, cb);
 }
 
-function kittensStayingMoreThan(numberOfDays){
-    return KittenStay.count({ days : { "$gt" :  numberOfDays } })
+function kittensStayingMoreThan(numberOfDays, cb){
+    return KittenStay.count({ days : { "$gt" :  numberOfDays } }, cb);
 }
 
-function bookedKittens(){
-    return KittenStay.count({});
+function bookedKittens(cb){
+    return KittenStay.count({}, cb);
 }
 
+function createReport(day, duration, cb){
 
-
-async function createReport(day, duration){
-
-    let bookedForDay = await kittensBookedForWeekday(day)
-    let poorKittens = await kittensStayingMoreThan(duration)
-    let booked = await bookedKittens();
-    let message = createMessage(day, duration,
-        {bookedForDay,
-         poorKittens,
-         booked});
-
-    return message;
-}
-
-
-(async function (){
-    console.log("Async kittens");
-    console.log("=============");
+    kittensBookedForWeekday(day, function(err, bookedForDay){
+        if (err){
+            return cb(err);
+        }
+        kittensStayingMoreThan(duration, function(err, poorKittens){
+            if (err){
+                return cb(err);
+            }
+            bookedKittens(function(err, bookedKittens){
+                if (err){
+                    return cb(err);
+                }
+                let kittenData = {
+                    bookedForDay,
+                    poorKittens,
+                    booked : bookedKittens
+                };
+                let message = createMessage(day, duration, kittenData);
+                cb(null, message);
+            });
+        });
+    });
     
-    let report = await createReport("Monday", 3);
-    console.log(report);
-    mongoose.connection.close();
-})();
+}
 
-//createReport("Friday", 6)
+createReport("Monday", 3, function(err, message){
+    console.log("Callback Kittens message");
+    console.log("########################");
+    console.log(message);
+    mongoose.connection.close();
+});
+
 
 
 
