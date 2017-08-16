@@ -1,18 +1,7 @@
 var mongoose = require('mongoose');
 const createMessage = require('./create-message');
-
-mongoose.connect('mongodb://localhost/easy_kittens', {
-    "useMongoClient" : true
-});
-
-mongoose.Promise = Promise;
-
-var KittenStay = mongoose.model('KittenStay',
-{
-    name: String,
-    arrivalDay : String,
-    days : Number
-});
+const models = require('./models');
+const KittenStay = models.KittenStay;
 
 function kittensBookedForWeekday(weekday){
     return KittenStay.count({arrivalDay : weekday})
@@ -26,17 +15,15 @@ function bookedKittens(){
     return KittenStay.count({});
 }
 
-
-
 async function createReport(day, duration){
 
     let bookedForDay = await kittensBookedForWeekday(day)
     let poorKittens = await kittensStayingMoreThan(duration)
     let booked = await bookedKittens();
     let message = createMessage(day, duration,
-        {bookedForDay,
-         poorKittens,
-         booked});
+        { kittensArriving : bookedForDay,
+          kittensStayingMoreThan : poorKittens,
+          bookedKittens : booked});
 
     return message;
 }
@@ -45,7 +32,7 @@ async function createReport(day, duration){
 (async function (){
     console.log("Async kittens");
     console.log("=============");
-    
+
     let report = await createReport("Monday", 3);
     console.log(report);
     mongoose.connection.close();

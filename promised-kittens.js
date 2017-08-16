@@ -1,22 +1,12 @@
 const mongoose = require('mongoose');
 const createMessage = require('./create-message');
-
-mongoose.connect('mongodb://localhost/easy_kittens', {
-    "useMongoClient": true
-});
-
-mongoose.Promise = Promise;
-
-var KittenStay = mongoose.model('KittenStay', {
-    name: String,
-    arrivalDay: String,
-    days: Number
-});
+const models = require('./models');
+const KittenStay = models.KittenStay;
 
 function kittensBookedForWeekday(weekday) {
     return KittenStay.count({
         arrivalDay: weekday
-    })
+    });
 }
 
 function kittensStayingMoreThan(numberOfDays) {
@@ -24,7 +14,7 @@ function kittensStayingMoreThan(numberOfDays) {
         days: {
             "$gt": numberOfDays
         }
-    })
+    });
 }
 
 function bookedKittens() {
@@ -49,7 +39,6 @@ function createReport(day, duration) {
             return message
         });
 }
-
 
 createReport("Monday", 3)
     .then(function(message) {
