@@ -28,3 +28,5 @@ create table kitten_stay (
   days int
 );
 ```
+
+> Look at [this link](https://node-postgres.com/features/queries#parameterized-query) to see how to use callbacks, promises and async/await with PostgreSQL.
