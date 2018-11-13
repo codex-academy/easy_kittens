@@ -18,7 +18,13 @@ And we have 13 kittens booked for the week.`
 
 Write a function called `createReport` that can read data from a PostgreSQL table (or MongoDB collection) to create the string above for any day of the week. The function takes two parameters `weekDay` (the week day) and `duration` (how long a kitten is booked in for).
 
-A SQL table could look like this:
+Create a SQL table like this:
 
-```
+```sql
+create table kitten_stay (
+  id serial primary key,
+  kitten_name text,
+  arrival_day text,
+  days int
+);
 ```
