@@ -150,8 +150,7 @@ const dbPool = new Pool({
 
 You can run the sql queries using the `dbPool.query` method.
 
-
-### From callbacks to async/await via Promises
+# From callbacks to async/await via Promises
 
 Exploring callbacks & promises to appreciate `async/await` gaining some understanding along the way.
 
@@ -371,8 +370,7 @@ function createReport(weekDay, duration) {
 
 Promises makes querying PostgreSQL much easier, but we can still do better still.
 
-### Async
-
+### Async/await
 
 `async/await` is even a better way to use asyncronous code in NodeJS - we can use it if the function we are calling in NodeJS returns a Promise.
 
