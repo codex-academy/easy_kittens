@@ -39,7 +39,19 @@ const fridayReport = createReport('Friday', 2);
 ```
 
 
-The function takes two parameters `weekDay` (the week day) and `duration` (how long a kitten is booked in for). 
+The function takes two parameters `weekDay` (the week day) and `duration` (how long a kitten is booked in for).
+
+### The SQL queries
+
+The three SQL queriest that we need for the report are:
+
+```sql
+select count(*) from kittens;
+select count(*) from kittens where week_day = 'Thursday';
+select count(*) from kittens where duration > 4;
+```
+
+We will need to see how we can call them from NodeJS to generate the required report.
 
 ## Setup
 
