@@ -8,6 +8,9 @@ Exploring:
 * Promises
 * async/await
 
+> This workshop is available on [YouTube](https://www.youtube.com/watch?v=34QHlCpR9bs&list=PLVcT2txrixoVW_HZsO70gf695a1zfXNvf)
+
+
 ## The brief
 
 Your local kitten cattery needs to send a daily email report. That looks like this:
