@@ -19,7 +19,7 @@ Your local kitten cattery needs to send a daily email report. That looks like th
 5 kittens are staying longer than 3 days
 And we have 13 kittens booked for the week.`
 
-Write a function called `createReport` that reads data from a PostgreSQL table and create the report above.
+Write a function called `createReport` that reads data from a sql table and create the report above.
 
 The function take two parameters the `weekDay` and the `duration` it will check for.
 
@@ -58,114 +58,15 @@ We will need to see how we can call them from NodeJS to generate the required re
 
 ## Setup
 
-### Create the database
-
-Create a PostgreSQL database called `easy_kittens`:
-
-Using these commands"
-
-```sql
-sudo -u postgres createdb easy_kittens;
-```
-
-### Create a database user
-
-> **Note:** You could use a different username to accesst the database. The standard codeX username is `coder` hence these instructions are using it.
-
-
-You should already have a `coder` user if you are using a codeX laptop. The username used to access a PostgreSQL database needs to be an actual username on your server or PC.
-
-If not do this:
+### Install sqlite
 
 ```
-sudo -u postgres createuser coder -P;
+npm install --save sqlite sqlite3
 ```
 
-Enter the password `pg123` when prompted after executing the `createuser` command. 
+### Setup the code
 
-Now run *psql* as the *postgres* user:
-
-```
-sudo -u postgres psql;
-```
-
-### Grant the user access to the database
-
-Grant the `coder` user access to the `easy_kittens` database by running this command: 
-
-```
-grant all privileges on database easy_kittens to coder;
-```
-
-No exit from the `psql` session as the `postgres` user by typing `\q` and pressing `enter`
-
-### Create the tables
-
-Now run `psql` in the root of this project using:
-
-```
-psql easy_kittens
-```
-
-Run the database scripts to create the `kittens` table in `psql`:
-
-```
-\i sql/001-create-kittens-table.sql
-```
-
-And to add data to the database:
-
-```
-\i sql/002-create-kittens-data.sql
-```
-
-After running these scripts there should be data in the kittens tables:
-
-Run this query to check.
-
-```
-select * from kittens;
-```
-
-## Accessing a PostgreSQL database from NodeJS
-
-For NodeJS to access PostgreSQL we need to install a `npm` module.
-
-There are 2 possible npm modules:
-
-* [node-postgres](https://www.npmjs.com/package/pg)
-* [pg-promise](https://www.npmjs.com/package/pg-promise)
-
-We are using [node-postgres](https://www.npmjs.com/package/pg) as it gives us easy access to `callbacks` & `promises`.
-
-Setup you project:
-
-```
-npm init --y
-```
-
-And install node-postgres:
-
-```
-npm install --save pg
-```
-
-Create a new file called `index.js` and add this code into it.
-
-```javascript
-const pg = require("pg");
-const Pool = pg.Pool;
-// which db connection to use
-const connectionString = process.env.DATABASE_URL || 'postgresql://localhost:5432/easy_kittens';
-
-const dbPool = new Pool({
-	connectionString,
-});
-```
-
-You can run the sql queries using the `dbPool.query` method.
-
-# From callbacks to async/await via Promises
+## From callbacks to async/await via Promises
 
 Exploring callbacks & promises to appreciate `async/await` gaining some understanding along the way.
 

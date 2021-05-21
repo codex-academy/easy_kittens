@@ -1,4 +1,4 @@
-nsert into kittens (kitten_name, week_day, duration) values ('Whiskers', 'Monday', 4);
+insert into kittens (kitten_name, week_day, duration) values ('Whiskers', 'Monday', 4);
 insert into kittens (kitten_name, week_day, duration) values ('Jo', 'Monday',2);
 insert into kittens (kitten_name, week_day, duration) values ('Rocky', 'Tuesday',6);
 insert into kittens (kitten_name, week_day, duration) values ('Sox', 'Tuesday',8);
