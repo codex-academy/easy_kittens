@@ -9,6 +9,6 @@
   "license": "ISC",
   "dependencies": {
     "sqlite": "^4.0.22",
-    "sqlite3": "^5.0.2"
+    "sqlite3": "^5.0.3"
   }
 }
